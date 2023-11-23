@@ -2,6 +2,7 @@ version: '3'
 services:
   # webserver
   nginx:
+    container_name: ${APP_NAME}.nginx
     build: ./nginx
     volumes:
       - ./:/var/www/html
@@ -13,6 +14,7 @@ services:
   
   # wordpress
   php:
+    container_name: ${APP_NAME}.wp
     build: .
     env_file: ./.env
     volumes:
@@ -20,6 +22,7 @@ services:
   
   # database: mysql|mariadb
   db:
+    container_name: ${APP_NAME}.db
     image: mariadb
     restart: always
     environment:
@@ -33,6 +36,7 @@ services:
   
   # db console
   adminer:
+    container_name: ${APP_NAME}.adminer
     image: adminer
     restart: always
     ports:
