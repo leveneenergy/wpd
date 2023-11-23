@@ -1,0 +1,42 @@
+version: '3'
+services:
+  # webserver
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - '8080:80'
+    depends_on:
+      - php
+      - db
+  
+  # wordpress
+  php:
+    build: .
+    env_file: ./.env.dev
+    volumes:
+      - ./:/var/www/html
+  
+  # database: mysql|mariadb
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: mariadb
+      MARIADB_DATABASE: mariadb
+      MARIADB_USER: mariadb
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - 3306:3306
+  
+  # db console
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080
+    depends_on:
+      - db
+
