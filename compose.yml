@@ -14,7 +14,7 @@ services:
   # wordpress
   php:
     build: .
-    env_file: ./.env.dev
+    env_file: ./.env
     volumes:
       - ./:/var/www/html
   
@@ -23,9 +23,9 @@ services:
     image: mariadb
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: mariadb
-      MARIADB_DATABASE: mariadb
-      MARIADB_USER: mariadb
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
     volumes:
       - ./data:/var/lib/mysql
     ports:
